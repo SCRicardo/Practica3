@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Practica4.AccesoDatos.Repositorio.IRepositorio;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -10,7 +11,8 @@ namespace Practica4.AccesoDatos.Repositorio.IRepositorio
     {
         IBodegaRepositorio Bodega { get; }
         ICategoriaRepositorio Categoria { get; }
-        IMarcaRepositorio Marca { get; }
+        IMarcaRepositorio Marca { get;}
+        IProductoRepositorio Producto { get;}
         Task Guardar();
     }
 }
