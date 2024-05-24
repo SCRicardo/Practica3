@@ -1,6 +1,7 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using Practica4.AccesoDatos.Data;
 using Practica4.AccesoDatos.Repositorio.IRepositorio;
+using Practica4.Modelos.Especificaciones;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -52,6 +53,32 @@ namespace Practica4.AccesoDatos.Repositorio
                 query = query.AsNoTracking();
             }
             return await query.ToListAsync();
+        }
+        public PagesList<T> ObtenerTodosPaginado(Parametros parametros, Expression<Func<T, bool>> filtro = null, Func<IQueryable<T>, IOrderedQueryable<T>> orderBy = null, string incluirPropiedades = null, bool isTracking = true)
+        {
+            IQueryable<T> query = dbSet;
+            if (filtro != null)
+            {
+                query = query.Where(filtro); //Select * from Tabla where......
+            }
+            if (incluirPropiedades != null)
+            {
+                foreach (var incluirProp in incluirPropiedades.Split(new char[] { ',' }, StringSplitOptions.RemoveEmptyEntries))
+                {
+                    query = query.Include(incluirProp);
+                }
+            }
+
+            if (orderBy != null)
+            {
+                query = orderBy(query);
+            }
+
+            if (!isTracking)
+            {
+                query = query.AsNoTracking();
+            }
+            return PagesList<T>.ToPagesList(query, parametros.PageNumber, parametros.PageSize);
         }
 
         public async Task<T> obtenerPrimero(Expression<Func<T, bool>> filtro = null, string incluirPropiedades = null, bool isTracking = true)

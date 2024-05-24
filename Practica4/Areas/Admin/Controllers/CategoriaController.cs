@@ -35,6 +35,16 @@ namespace Practica4.Areas.Admin.Controllers
             return View(categoria);
         }
 
+        
+
+        #region API 
+        [HttpGet]
+        public async Task<IActionResult> ObtenerTodos()
+        {
+            var todos = await _unidadTrabajo.Categoria.obtenerTodos();
+            return Json(new { data = todos });
+        }
+
         [HttpPost]
         [ValidateAntiForgeryToken] //Evita que se pueda clonar 
         public async Task<IActionResult> Upsert(Categoria categoria)
@@ -56,6 +66,19 @@ namespace Practica4.Areas.Admin.Controllers
             }
             TempData[DS.Error] = "Error al guardar la categoria";
             return View(categoria);
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> Delete(int id)
+        {
+            var productoDB = await _unidadTrabajo.Categoria.obtener(id);
+            if (productoDB == null)
+            {
+                return Json(new { success = false, message = "Error al borrar Categoria." });
+            }
+            _unidadTrabajo.Categoria.Remover(productoDB);
+            await _unidadTrabajo.Guardar();
+            return Json(new { success = true, message = "Categoria borrado exitósamente." });
         }
 
         [HttpPost]
@@ -83,14 +106,6 @@ namespace Practica4.Areas.Admin.Controllers
                 return Json(new { success = true });
             }
             return Json(new { success = false });
-        }
-
-        #region API 
-        [HttpGet]
-        public async Task<IActionResult> ObtenerTodos()
-        {
-            var todos = await _unidadTrabajo.Categoria.obtenerTodos();
-            return Json(new { data = todos });
         }
         #endregion
     }

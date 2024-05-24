@@ -6,10 +6,11 @@ $(document).ready(function () {
 function loadDataTable() {
     datatable = $('#tblDatos').DataTable({
         //Seccion de ajax para el´pluggin
-        "ajax": { "url": "/Admin/Categoria/obtenerTodos" },
+        "ajax": { "url": "/Admin/Servicio/obtenerTodos" },
         "columns": [
-            { "data": "nombre", "width": "20%" },
-            { "data": "descripcion", "width": "40%" },
+            { "data": "nombre" },
+            { "data": "descripcion" },
+            { "data": "categoria.nombre" },
             {
                 "data": "estado",
                 "render": function (data) {
@@ -19,33 +20,40 @@ function loadDataTable() {
                     else {
                         return "Inactivo";
                     }
-                }, "width": "20%"
+                }
             },
             {
                 "data": "id",
-                "render": function (data) {  //Alt + 96 para estos simbolos
-                    return ` 
+                "render": function (data) {
+                    return `
                         <div class="text-center">
-                            <a href="/Admin/Categoria/Upsert/${data}" class="btn btn-success text-white" style="cursor:pointer">
-                                <i class="bi bi-pencil-square"></i>
-                            </a>
-                            <a onclick=Delete("/Admin/Categoria/Delete/${data}") class="btn btn-danger text-white" style="cursor:pointer">
-                            <i class="bi bi-trash"></i>
-                            </a>
+                           <a href="/Admin/Servicio/Upsert/${data}" class="btn btn-success text-white" style="cursor:pointer">
+                              <i class="bi bi-pencil-square"></i>  
+                           </a>
+                           <a onclick=Delete("/Admin/Servicio/Delete/${data}") class="btn btn-danger text-white" style="cursor:pointer">
+                                <i class="bi bi-trash3-fill"></i>
+                           </a> 
                         </div>
                     `;
                 }, "width": "20%"
             }
         ],
         language: {
-            url: '//cdn.datatables.net/plug-ins/1.10.25/i18n/Spanish.json'
-        }
+            url: '//cdn.datatables.net/plug-ins/1.10.25/i18n/Spanish.json',
+            search: "Búsqueda:",
+            paginate: {
+                previous: "Antes",
+                next: "Después",
+            },
+            info: "Mostrando resultados del 1 al 2 de 2 resultados",
+            lengthMenu:"Ver resultados"      
+        },
     });
 }
 
 function Delete(url) {
     swal({
-        title: "¿Estás seguro de eliminar la Categoria?",
+        title: "¿Estás seguro de eliminar el Servicio?",
         text: "Este registro no será recuperado",
         icon: "warning",
         buttons: true,
@@ -62,7 +70,7 @@ function Delete(url) {
                         toastr.error(data.message);
                     }
                 }
-
+            
             });
         }
     });

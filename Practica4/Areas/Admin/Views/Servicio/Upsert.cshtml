@@ -1,0 +1,128 @@
+﻿@model Practica4.Modelos.ViewModels.ServicioVM
+@using Practica4.Utilidades
+@{
+    ViewData["Title"] = "Upsert";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+    var titulo = "Crear nuevo Servicio";
+}
+
+<form method="post" enctype="multipart/form-data"> 
+    @if (Model.Servicio.Id != 0)
+    {
+        titulo = "Editar Servicio";
+        <input asp-for="Servicio.Id" hidden />
+        <input asp-for="Servicio.ImagenUrl" hidden />
+    }
+    <div class="border p-3">
+        <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+        <div class="row">
+            <h2 class="text-info">@titulo</h2>
+        </div>
+        <!--Crear el sistema de columnas-->
+        <div class="row">
+            <!--Primer columna para los campos de datos-->
+            <div class="col-8">
+                <div class="container">
+                    <!--Campo Numero de Serie-->
+                    <div class="row">
+                        <div class="col-md-6">
+                            <label>Nombre</label>
+                            <input asp-for="Servicio.Nombre" class="form-control" />
+                            <span asp-validation-for="Servicio.Nombre" class="text-danger"></span>
+                        </div>
+                    </div>
+                    <!--Campo Descripcion-->
+                    <div class="row">
+                        <div class="col-md-6">
+                            <label>Descripcion</label>
+                            <input asp-for="Servicio.Descripcion" class="form-control" />
+                            <span asp-validation-for="Servicio.Descripcion" class="text-danger"></span>
+                        </div>
+                    </div>
+                    <!--Campo Imagen-->
+                    <div class="row">
+                        <div class="col-md-6">
+                            <label>Imagen del Servicio</label>
+                            <input type="file"
+                                accept="image/png,image/gif,image/jpeg"
+                                name="files"
+                                id="imagenId"
+                                class="form-control" />
+                            <span asp-validation-for="Servicio.ImagenUrl" class="text-danger"></span>
+                        </div>
+                    </div>
+                    <!--Lista categoria-->
+                    <div class="row">
+                        <div class="col-md-6">
+                            <label>Categoria</label>
+                            <select asp-for="Servicio.CategoriaId" asp-items="@Model.CategoriaLista" class="form-select">
+                                <option disabled selected>--Elige una categoria--</option>
+                            </select>
+                            <span asp-validation-for="Servicio.CategoriaId" class="text-danger"></span>
+                        </div>
+                    </div>
+                    <!--Lista padre-->
+                    <div class="row">
+                        <div class="col-md-6">
+                            <label>Servicio</label>
+                            <select asp-for="Servicio.PadreId" asp-items="@Model.PadreLista" class="form-select">
+                                <option disabled selected>--Elige un Servicio--</option>
+                            </select>
+                        </div>
+                    </div>
+                    <!--Campo estado-->
+                    <div class="row">
+                        <div class="col-md-6">
+                            <label>Estado</label>
+                            <select asp-for="Servicio.Estado" class="form-select">
+                                <option value="true">Activa</option>
+                                <option value="false">Inactiva</option>
+                            </select>
+                            <span asp-validation-for="Servicio.Estado" class="text-danger"></span>
+                        </div>
+                    </div>
+                    <!--Botones-->
+                    <br />
+                    <div class="d-grid gap-2 d-md-block">
+                        @if (Model.Servicio.Id != 0)
+                        {
+                            <partial name="_BotonesActualizarYRegresar" model="Model.Servicio.Id"></partial>
+                        }
+                        else
+                        {
+                            <button type="submit" onclick="return validarImagen()" class="btn-primary">
+                                <i class="bi bi-clipboard-plus-fill"></i>Crear
+                            </button>
+                            <a asp-action="Index" class="btn btn-success"><i class="bi bi-arrow-return-left"></i>
+                                Regresar</a>
+                        }
+                    </div>
+                </div>
+            </div>
+            <!--Columna para imagen-->
+            <div class="col-4">
+                @if (Model.Servicio.Id != 0)
+                {
+                    <img src="@DS.ImagenRuta@Model.Servicio.ImagenUrl"
+                         width="100%" 
+                    style="border-radius:5px;border:1px solid #bbb"/>
+                }
+            </div>
+        </div>
+
+    </div>
+</form>
+
+@section Scripts{
+    <partial name="_ValidationScriptsPartial"></partial>
+    <script>
+        function validarImagen() {
+            if (document.getElementById("imagenId").value == "") {
+                swal("Error", "Selecciona una imagen", "error");
+                return false;
+            }
+            return true;
+        }
+    </script>
+}
+

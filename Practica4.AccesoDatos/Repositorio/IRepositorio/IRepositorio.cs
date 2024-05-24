@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Practica4.Modelos.Especificaciones;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Linq.Expressions;
@@ -16,6 +17,12 @@ namespace Practica4.AccesoDatos.Repositorio.IRepositorio
             string incluirPropiedades = null,
             bool isTracking = true
             );
+        PagesList<T> ObtenerTodosPaginado(Parametros parametros,
+    Expression<Func<T, bool>> filtro = null, //Sirve para ver si viene o no informacion
+    Func<IQueryable<T>, IOrderedQueryable<T>> orderBy = null, //Sirve para Ordenar
+    string incluirPropiedades = null,
+    bool isTracking = true  //Sirve para reservar un pequeño espacio en memoria }
+    );
         Task<T> obtenerPrimero(
             Expression<Func<T, bool>> filtro = null,
             string incluirPropiedades = null,

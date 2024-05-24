@@ -1,7 +1,8 @@
-﻿using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
+﻿using Practica4.Modelos;
+using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
-using Practica4.Modelos;
 using System.Reflection;
+using System.Drawing;
 
 namespace Practica4.AccesoDatos.Data
 {
@@ -11,10 +12,9 @@ namespace Practica4.AccesoDatos.Data
             : base(options)
         {
         }
-        public DbSet<Bodega> Bodegas { get; set; }
         public DbSet<Categoria> Categorias { get; set; }
-        public DbSet<Marca> Marcas { get; set; }
-        public DbSet<Producto> Productos { get; set; }
+        public DbSet<Servicio> Servicios { get; set; }
+        
         protected override void OnModelCreating(ModelBuilder builder)
         {
             base.OnModelCreating(builder);

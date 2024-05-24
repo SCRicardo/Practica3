@@ -17,7 +17,7 @@ namespace Practica4.Modelos
         [Required(ErrorMessage = "El campo Descripcion es requerido")]
         [MaxLength(60, ErrorMessage = "El campo Descripcion no es mas de 60 caracteres")]
         public string Descripcion { get; set; }
-        [Required(ErrorMessage = "El campo Nombre es requerido")]
+        [Required(ErrorMessage = "El campo Estado es requerido")]
         public bool Estado { get; set; }
     }
 }
