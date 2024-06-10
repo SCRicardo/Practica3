@@ -34,7 +34,7 @@ namespace Practica4.Areas.Inventario.Controllers
             Parametros parametros = new Parametros()
             {
                 PageNumber = pageNumber,
-                PageSize = 3 //El PageSize es la cantidad de productos que se va a mostrar, en este caso es 3
+                PageSize = 4 //El PageSize es la cantidad de productos que se va a mostrar, en este caso es 3
             };
             var resultado = _unidadTrabajo.Servicio.ObtenerTodosPaginado(parametros);
             if (!String.IsNullOrEmpty(busqueda))

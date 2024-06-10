@@ -9,6 +9,6 @@ namespace Practica4.Modelos.Especificaciones
     public class Parametros
     {//Sistema de navegacion
         public int PageNumber { get; set; } = 1;
-        public int PageSize { get; set; } = 3;
+        public int PageSize { get; set; } = 4;
     }
 }

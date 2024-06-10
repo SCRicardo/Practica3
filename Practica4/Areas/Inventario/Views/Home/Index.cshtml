@@ -60,7 +60,7 @@
     </div>
 </section>
 
-<section>
+<section class="mb-4">
     <div class="container my-2">
         <form asp-action="Index" method="get">
             <div class="col-lg-6 col-md-6 col-sm-6 d-flex">
@@ -100,7 +100,7 @@
         }
     </div>
     <!--Botones de navegacion-->
-    <div class="d-flex flex-row">
+    <div class="d-flex flex-row mb-2">
         <a asp-action="Index" asp-route-pageNumber="@(1)" class="btn btn-outline-primary"
            asp-route-busquedaActual="@ViewData["BusquedaActual"]">
             <i class="bi bi-skip-start-fill"></i>
